@@ -22,23 +22,24 @@ The setup is managed by **GNU Stow** and automated with a bootstrap script (`ins
 
 Clone to ~/.dotfiles. The --recursive flag is now required to pull the nvim config
 
-    ```bash
+```bash
     git clone --recursive [https://github.com/neonid0/.dotfiles.git](https://github.com/neonid0/.dotfiles.git) ~/.dotfiles
-    ```
+```
 
 2.  **Run the bootstrap script:**
-    ```bash
-    cd ~/.dotfiles
-    ./install.sh
-    ```
+
+```bash
+cd ~/.dotfiles
+./install.sh
+```
 
 The script is idempotent, so you can run it multiple times. It will ask for `sudo` permission to install system packages.
 
 **Note on Updating**: To pull updates for both the dotfiles and the nvim config, run:
 
-    ```
-    git pull && git submodule update --remote
-    ```
+```bash
+git pull && git submodule update --remote
+```
 
 ---
 

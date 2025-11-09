@@ -1,0 +1,9 @@
+[Unit]
+Description=Stop media on Bluetooth headphone disconnect
+
+[Service]
+ExecStart=~/.config/i3/scripts/btautostop.sh
+Restart=always
+
+[Install]
+WantedBy=default.target

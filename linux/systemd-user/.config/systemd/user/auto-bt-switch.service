@@ -1,0 +1,9 @@
+[Unit]
+Description=Auto Bluetooth Sink Switcher
+
+[Service]
+ExecStart=~/.config/i3/scripts/btautoswitch.sh
+Restart=always
+
+[Install]
+WantedBy=default.target

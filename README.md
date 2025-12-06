@@ -6,14 +6,6 @@ The setup is managed by **GNU Stow** and automated with a bootstrap script (`ins
 
 ---
 
-## 📸 Preview
-
-(This is the perfect place to put a screenshot of your `i3` desktop, maybe running `neofetch` or `rofi`, so people can see what it looks like!)
-
-
-
----
-
 ## 🚀 Installation
 
 **Warning:** This script will install packages, set `zsh` as your default shell, and overwrite existing configs for the software listed below. Please read the script before running.
@@ -23,7 +15,7 @@ The setup is managed by **GNU Stow** and automated with a bootstrap script (`ins
 Clone to ~/.dotfiles. The --recursive flag is now required to pull the nvim config
 
 ```bash
-    git clone --recursive [https://github.com/neonid0/.dotfiles.git](https://github.com/neonid0/.dotfiles.git) ~/.dotfiles
+git clone --recursive https://github.com/neonid0/.dotfiles.git ~/.dotfiles
 ```
 
 2.  **Run the bootstrap script:**

@@ -39,7 +39,7 @@
         enabled = true
         autoupdate = true
 [core]
-	      excludesfile = /home/neonid0/.gitignore_global
+	      excludesfile = ~/.gitignore_global
         editor = nvim
 [rebase]
         autoSquash = true

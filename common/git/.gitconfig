@@ -39,7 +39,7 @@
         enabled = true
         autoupdate = true
 [core]
-	      excludesfile = ~/.gitignore_global
+	      excludesfile = /home/neonid0/.gitignore_global
         editor = nvim
 [rebase]
         autoSquash = true
@@ -59,3 +59,8 @@
         conflictstyle = zdiff3 
 [pull]
         # rebase = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

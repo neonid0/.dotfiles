@@ -9,6 +9,7 @@
 general {
         colors = true
         interval = 5
+        output_format = "i3bar"
 }
 
 order += "disk /"
@@ -31,3 +32,4 @@ load {
 disk "/" {
         format = "%avail"
 }
+

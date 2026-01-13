@@ -14,6 +14,27 @@ export PATH="$HOME/Downloads/ideaIU-2024.3.1/idea-IU-243.22562.145/bin:$PATH"
 export PATH="$HOME/dependencies/skia/buildtools/linux64:$PATH"
 export PATH="$HOME/.spoofdpi/bin:$PATH"
 
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+
+export PATH=$PATH:$ANDROID_HOME/emulator
+
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$DOTNET_ROOT:$DOTNET_ROOT/tools:$PATH
+
+# .NET Aspire & HTTPS Dev Configuration
+
+# 1. Tell Kestrel (Server) where the private key is
+export ASPNETCORE_Kestrel__Certificates__Default__Path="$HOME/.aspnet/https/aspire.pfx"
+export ASPNETCORE_Kestrel__Certificates__Default__Password="password"
+
+# 2. Tell OpenSSL (Client/Dashboard) to trust this specific certificate
+# This fixes the "UntrustedRoot" error
+# export SSL_CERT_FILE="$HOME/.aspnet/https/aspire.crt"
+
+export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
 export NGSPICE_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu/libngspice.so"
 
 export SDKMAN_DIR="$HOME/.sdkman"
@@ -136,15 +157,39 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="$HOME/.local/bin:$PATH"
 
 neofetch
 alias v="nvim"
-export PATH="$PATH:/opt/mssql-tools/bin"
+alias pn="pnpm"
+alias dprune="docker system prune -a --volumes"
+alias aseprite="/home/neonid0/Downloads/Programs/aseprite/build/bin/aseprite"
 
-# Need to set these for avante-nvim 
-export AVANTE_OPENROUTER_API_KEY=
-export TAVILY_API_KEY=
+# API Keys - load from a local file not tracked in git
+# Create ~/.secrets file with your API keys:
+# export AVANTE_OPENROUTER_API_KEY="your-key-here"
+# export TAVILY_API_KEY="your-key-here"
+# export PIP_EXTRA_INDEX_URL="https://your-token@pypi.pkg.github.com/Parayuz/simple"
+if [ -f ~/.secrets ]; then
+    source ~/.secrets
+fi
 
+# pnpm
+export PNPM_HOME="/home/neonid0/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Added by get-aspire-cli.sh
+export PATH="$HOME/.aspire/bin:$PATH"
+
+# bun completions
+[ -s "/home/neonid0/.bun/_bun" ] && source "/home/neonid0/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

@@ -21,9 +21,36 @@ bindsym $mod+t exec "setxkbmap -layout 'tr'"
 # exec --no-startup-id xsetroot -cursor_name left_ptr
 # exec --no-startup-id xrdb -merge ~/.Xresources
 
-# bindsym $mod+Shift+v exec "setxkbmap -layout 'us,tr' -option 'grp:alt_ctrl_shift_toggle'"
+# Define the path to your controller
+set $timer_script ~/.config/i3/scripts/timer_control.sh
 
+# Define the mode
+set $mode_timetracking "⏱️ Time Tracking: (s)tart generic, (d)aily, (c)oding, (m)eeting, (q)uit tracking"
 
+bindsym $mod+y mode $mode_timetracking
+
+mode $mode_timetracking {
+    # Calls the script with specific arguments (Polymorphism via args)
+    
+    # Start Coding
+    bindsym c exec --no-startup-id $timer_script start Coding, mode "default"
+
+    # Start Meeting
+    bindsym m exec --no-startup-id $timer_script start Meeting, mode "default"
+
+    # Start Daily Standup (Nested tags)
+    bindsym d exec --no-startup-id $timer_script start Meeting Standup, mode "default"
+
+    # Start Generic (No tag provided, defaults to 'General')
+    bindsym s exec --no-startup-id $timer_script start, mode "default"
+
+    # Stop Tracking
+    bindsym q exec --no-startup-id $timer_script stop, mode "default"
+
+    # Exit modes
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -52,8 +79,8 @@ floating_modifier $mod
 
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec gnome-terminal
-bindsym $mod+Shift+Return exec gnome-terminal --title="Floating Terminal"
+bindsym $mod+Return exec kitty
+bindsym $mod+Shift+Return exec kitty --title="Floating Terminal"
 
 # kill focused window
 # bindsym $mod+space exec "/home/theprimeagen/dotfiles/awesome-streamerrc/ThePrimeagen/tmux2"
@@ -65,8 +92,8 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+Shift+v exec --no-startup-id "~/.config/rofi/video_search.sh"
 bindsym $mod+g exec --no-startup-id gnome-terminal --title="Floating Terminal" -- zsh -ic "~/.config/rofi/grep_search.sh"
 bindsym $mod+Shift+f exec --no-startup-id gnome-terminal --title="FZF Launcher" -- zsh -ic "~/.config/i3/scripts/fuzzyfinder.sh"
-bindsym $mod+Shift+n exec --no-startup-id "~/.config/i3/scripts/togglerotate.sh"
-bindsym $mod+Shift+m exec --no-startup-id "~/.config/i3/scripts/togglescreen.sh"
+bindsym $mod+m exec --no-startup-id "~/.config/i3/scripts/display-selector.sh"
+bindsym $mod+n exec --no-startup-id "~/.config/i3/scripts/rotation-manager.sh"
 bindsym $mod+Shift+w exec --no-startup-id "~/.config/i3/scripts/toggletablet.sh"
 bindsym $mod+Shift+s exec --no-startup-id gnome-terminal --title="Floating Terminal" -- zsh -ic "~/.config/i3/scripts/tmuxsession.sh"
 
@@ -154,7 +181,10 @@ for_window [class="Docker Desktop"] floating enable
 for_window [class="input-leap"] floating enable
 for_window [class="Thunar"] floating enable
 for_window [class="InputLeap"] floating enable
+for_window [class="org.gnome.DejaDup"] floating enable
+for_window [class="Emulator"] floating enable
 # for_window [class="Postman"] floating enable
+
 
 
 # f_cus the parent container
@@ -275,12 +305,12 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         output DP-2
-        status_command i3status
+        status_command ~/.config/i3/scripts/status_wrapper.sh
         tray_output DP-2
         colors {
         # Workspace indicator colors
-        focused_workspace  #3b3b3b #6a6a6a #1e1f29
-        active_workspace   #1e1f29 #8be9fd #1e1f29
+        focused_workspace  #3b3b3b #be95ff #1e1f29
+        active_workspace   #1e1f29 #6a6a6a #1e1f29
         inactive_workspace #1e1f29 #505050 #1e1f29
         urgent_workspace   #1e1f29 #ff5555 #1e1f29
     }
@@ -288,12 +318,25 @@ bar {
 
 bar {
         output DP-0
-        status_command i3status
+        status_command ~/.config/i3/scripts/status_wrapper.sh
         tray_output DP-0
         colors {
         # Workspace indicator colors
-        focused_workspace  #3b3b3b #6a6a6a #1e1f29
-        active_workspace   #1e1f29 #8be9fd #1e1f29
+        focused_workspace  #3b3b3b #be95ff #1e1f29
+        active_workspace   #1e1f29 #6a6a6a #1e1f29
+        inactive_workspace #1e1f29 #505050 #1e1f29
+        urgent_workspace   #1e1f29 #ff5555 #1e1f29
+    }
+}
+
+bar {
+        output HDMI-0
+        status_command ~/.config/i3/scripts/status_wrapper.sh
+        tray_output HDMI-0
+        colors {
+        # Workspace indicator colors
+        focused_workspace  #3b3b3b #be95ff #1e1f29
+        active_workspace   #1e1f29 #6a6a6a #1e1f29
         inactive_workspace #1e1f29 #505050 #1e1f29
         urgent_workspace   #1e1f29 #ff5555 #1e1f29
     }
@@ -305,45 +348,43 @@ bar {
 # set $gtk_theme Yaru-dark tried for nautilus theme
 # exec --no-startup-id env GTK_THEME=$gtk_theme nautilus
 
-exec --no-startup-id i3-msg "workspace 1; exec i3-sensible-terminal"
+# System tray and utilities
 exec --no-startup-id nm-applet
 exec_always --no-startup-id picom -b
 exec_always --no-startup-id feh --bg-scale ~/Pictures/bg.jpg
+
+# Unity Editor rendering fix for i3
+# exec --no-startup-id i3-unity-fix
 
 # Launch Solaar in the background, only showing the system tray icon
 exec --no-startup-id solaar --window=hide
 
 exec --no-startup-id xset r rate 200 60
 
-exec --no-startup-id i3-msg "workspace 2; exec floorp"
-
-# exec --no-startup-id bash -c "sleep 2"
-
-exec --no-startup-id i3-msg "workspace 3; exec spotify"
+# Startup script: detects displays and launches apps on correct workspaces
+# Single: terminal=1, floorp=2, spotify=3
+# Dual: terminal=1, floorp=5, spotify=6
+# Triple: terminal=1, floorp=7, spotify=8
+exec --no-startup-id ~/.config/i3/scripts/startup.sh
 
 # assign [class="aseprite"] 4
 # exec --no-startup-id i3-msg "workspace 4; exec aseprite"
 
-# bindsym $mod+Shift+s exec --no-startup-id ~/dotfiles/bin/monitor
-# bindsym $mod+Shift+n exec --no-startup-id ~/dotfiles/bin/resolution
-
-# Dual Monitor Settings
-exec_always --no-startup-id "~/.config/i3/scripts/displays.sh"
-# exec --no-startup-id xrandr --output DP-2 --primary --mode 1920x1080 --pos 0x0 \ --output DP-0 --mode 1920x1080 --pos 1920x0 --rigth-of DP-2
-# exec --no-startup-id xrandr --output DP-0 --brightness 0.7
-
-# exec_always --no-startup-id "~/.config/i3/scripts/monitor.sh" its not workin properly
 bindsym $mod+p move workspace to output right
+
+# Default workspace assignments (triple monitor layout)
+# These ensure workspaces are created on the correct output
+# display-selector.sh will override these when you change configurations
 workspace 1 output DP-2
 workspace 2 output DP-2
 workspace 3 output DP-2
 workspace 4 output DP-0
 workspace 5 output DP-0
 workspace 6 output DP-0
-workspace 7 output DP-2
-workspace 8 output DP-2
-workspace 9 output DP-0
-workspace 0 output DP-0
+workspace 7 output HDMI-0
+workspace 8 output HDMI-0
+workspace 9 output HDMI-0
+workspace 10 output DP-2
 
 # FKeys
 # Pulse Audio controls
@@ -355,6 +396,10 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
+# Display brightness controls (all monitors via xrandr)
+bindsym $mod+F6 exec --no-startup-id ~/.config/i3/scripts/brightness-control.sh down
+bindsym $mod+F7 exec --no-startup-id ~/.config/i3/scripts/brightness-control.sh up
+
 
 ## Screenshots
 # bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
@@ -364,8 +409,8 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 ## Clipboard Screenshots
 # bindsym Ctrl+$mod+s exec --no-startup-id maim | xclip -selection clipboard -t image/png
 # bindsym Ctrl+$mod+w exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
-# bindsym Ctrl+Shift+s exec --no-startup-id maim --select | xclip -selection clipboard -t image/png | maim '~/Downloads/Share/$(date +%Y-%m-%d_%H:%M:%S).png'
-bindsym Ctrl+Shift+s exec --no-startup-id maim --select | tee ~/Downloads/Share/$(date +%Y-%m-%d_%H:%M:%S).png | xclip -selection clipboard -t image/png
+# bindsym Ctrl+Shift+s exec --no-startup-id maim --select | xclip -selection clipboard -t image/png | maim 'home/neonid0/Downloads/Share/$(date +%Y-%m-%d_%H:%M:%S).png'
+bindsym Ctrl+Shift+s exec --no-startup-id maim --select | tee /home/neonid0/Downloads/Share/$(date +%Y-%m-%d_%H:%M:%S).png | xclip -selection clipboard -t image/png
 
 # Alsa audio controls.
 # bindsym $mod+Shift+comma exec ~/.config/i3/scripts/alsa restore

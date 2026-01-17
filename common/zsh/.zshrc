@@ -120,8 +120,15 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting you-should-use poetry)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#888888'
 
+# Configure autosuggestions to clear on history navigation
+# ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(up-line-or-history down-line-or-history)
 
 source $ZSH/oh-my-zsh.sh
+
+# zsh-autosuggestions vim keybindings
+bindkey '^l' autosuggest-accept
+bindkey '^k' up-line-or-beginning-search
+bindkey '^j' down-line-or-beginning-search
 
 # User configuration
 # alias extract-srt='unzip -j "*.zip" "*.srt"'

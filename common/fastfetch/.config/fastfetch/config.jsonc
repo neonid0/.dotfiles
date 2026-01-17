@@ -3,7 +3,7 @@
     "logo": {
         "type": "kitty",
         "source": "~/.config/fastfetch/logo.png",
-        "width": 100,
+        "width": 50,
         "height": 25
     },
     "modules": [

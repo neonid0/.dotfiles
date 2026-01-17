@@ -201,8 +201,7 @@ stow_interactive "common" "Select Common Dotfiles to Stow"
 # Stow OS-specific packages
 if [ "$OS" == "macOS" ]; then
     echo "Stowing macOS dotfiles..."
-    cd $DOTFILES_DIR/macos
-    stow -R -t ~ *
+    stow_interactive "mac" "Select macOS Dotfiles to Stow"
 
 elif [ "$OS" == "Linux" ]; then
     echo "Stowing Linux dotfiles..."
@@ -210,7 +209,7 @@ elif [ "$OS" == "Linux" ]; then
 
     # --- Add Executable Permission to Scripts ---
     echo "Setting executable permissions for i3 scripts..."
-    I3_SCRIPTS_DIR="$DOTFILES_DIR/linux/i3/.config/i3/scripts"
+    I3_SCRIPTS_DIR="$HOME/.config/i3/scripts"
     if [ -d "$I3_SCRIPTS_DIR" ]; then
         find "$I3_SCRIPTS_DIR" -type f -name "*.sh" -exec chmod +x {} \;
     else
@@ -219,7 +218,7 @@ elif [ "$OS" == "Linux" ]; then
 
     # --- Add Executable Permission to Rofi Scripts ---
     echo "Setting executable permissions for Rofi scripts..."
-    ROFI_SCRIPTS_DIR="$DOTFILES_DIR/linux/rofi/.config/rofi"
+    ROFI_SCRIPTS_DIR="$HOME/.config/rofi"
     if [ -d "$ROFI_SCRIPTS_DIR" ]; then
         find "$ROFI_SCRIPTS_DIR" -type f -name "*.sh" -exec chmod +x {} \;
     else

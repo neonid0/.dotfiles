@@ -21,14 +21,14 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         "tmux:.tmux.conf"
         "zsh:.zshrc"
         "p10k:.p10k.zsh"
+        "kitty:.config/kitty"
+        "fastfetch:.config/fastfetch"
+        "neofetch:.config/neofetch"
     )
     LINUX_CONFIGS=(
         "rofi:.config/rofi"
         "i3:.config/i3"
         "i3status:.config/i3status"
-        "kitty:.config/kitty"
-        "fastfetch:.config/fastfetch"
-        "neofetch:.config/neofetch"
     )
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     OS_DIR="mac"
@@ -37,6 +37,9 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         "tmux:.tmux.conf"
         "zsh:.zshrc"
         "p10k:.p10k.zsh"
+        "kitty:.config/kitty"
+        "fastfetch:.config/fastfetch"
+        "neofetch:.config/neofetch"
     )
     MAC_CONFIGS=(
         "aerospace:.config/aerospace"

@@ -18,8 +18,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     OS_DIR="linux"
     COMMON_CONFIGS=(
         "nvim:.config/nvim"
-        "tmux:.config/tmux"
-        "git:.config/git"
+        "tmux:.tmux.conf"
         "zsh:.zshrc"
         "p10k:.p10k.zsh"
     )
@@ -28,7 +27,6 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         "i3:.config/i3"
         "i3status:.config/i3status"
         "kitty:.config/kitty"
-        "feh:.config/feh"
         "fastfetch:.config/fastfetch"
         "neofetch:.config/neofetch"
     )
@@ -36,8 +34,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     OS_DIR="mac"
     COMMON_CONFIGS=(
         "nvim:.config/nvim"
-        "tmux:.config/tmux"
-        "git:.config/git"
+        "tmux:.tmux.conf"
         "zsh:.zshrc"
         "p10k:.p10k.zsh"
     )

@@ -2,9 +2,6 @@
 #
 # neonid0 .dotfiles Bootstrap Script
 
-# Stop on errors
-set -e
-
 # --- Configuration ---
 # Your dotfiles directory
 DOTFILES_DIR=~/.dotfiles
@@ -84,45 +81,79 @@ install_rustup() {
 }
 
 install_node() {
+    # Check if node is installed first (could be from nvm or system)
+    if command -v node &>/dev/null; then
+        echo "Node.js is already installed: $(node --version). Skipping."
+        return 0
+    fi
+    
+    # Check if nvm exists by sourcing it
+    if [ -s "$HOME/.nvm/nvm.sh" ]; then
+        \. "$HOME/.nvm/nvm.sh"
+    fi
+    
     if ! command -v nvm &>/dev/null; then
         echo "Installing NVM (Node Version Manager)..."
 
         # Download and install nvm:
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
-        # in lieu of restarting the shell
-        \. "$HOME/.nvm/nvm.sh"
+        # Source nvm for this session
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
         # Download and install Node.js:
         nvm install 24
 
         # Verify the Node.js version:
-        node -v # Should print "v24.11.0".
+        node -v
 
         # Verify npm version:
-        npm -v # Should print "11.6.1".
+        npm -v
 
         echo "NVM and Node.js installed."
     else
-        echo "NVM is already installed. Skipping."
+        echo "NVM is already installed. Installing Node.js..."
+        nvm install 24
     fi
 }
 
 install_i3lock_color() {
-    if ! command -v i3lock-color &>/dev/null; then
-        echo "Installing i3lock-color from source..."
-
-        # i3lock-color dependencies
-        sudo apt install whiptail autoconf gcc make pkg-config libpam0g-dev libcairo2-dev libfontconfig1-dev libxcb-composite0-dev libev-dev libx11-xcb-dev libxcb-xkb-dev libxcb-xinerama0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev libxkbcommon-dev libxkbcommon-x11-dev libjpeg-dev libgif-dev imagemagick
-
-        # Clone the repository
-        git clone https://github.com/Raymo111/i3lock-color.git ~/Downloads/i3lock-color
-        cd ~/Downloads/i3lock-color
-        ./install-i3lock-color.sh
-
-        echo "i3lock-color installed."
-    else
+    if command -v i3lock-color &>/dev/null; then
         echo "i3lock-color is already installed. Skipping."
+        return 0
+    fi
+    
+    echo "Installing i3lock-color from source..."
+
+    # i3lock-color dependencies
+    echo "Installing dependencies..."
+    sudo apt install -y whiptail autoconf gcc make pkg-config libpam0g-dev \
+        libcairo2-dev libfontconfig1-dev libxcb-composite0-dev libev-dev \
+        libx11-xcb-dev libxcb-xkb-dev libxcb-xinerama0-dev libxcb-randr0-dev \
+        libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev libxkbcommon-dev \
+        libxkbcommon-x11-dev libjpeg-dev libgif-dev imagemagick
+
+    # Clone the repository
+    local CLONE_DIR="$HOME/Downloads/i3lock-color"
+    if [ -d "$CLONE_DIR" ]; then
+        echo "Removing existing clone directory..."
+        rm -rf "$CLONE_DIR"
+    fi
+    
+    echo "Cloning i3lock-color repository..."
+    git clone https://github.com/Raymo111/i3lock-color.git "$CLONE_DIR"
+    cd "$CLONE_DIR"
+    
+    echo "Running install script..."
+    bash ./install-i3lock-color.sh
+    
+    cd "$DOTFILES_DIR"
+    
+    if command -v i3lock-color &>/dev/null; then
+        echo "i3lock-color successfully installed."
+    else
+        echo "Warning: i3lock-color installation may have failed. Please check manually."
     fi
 }
 
@@ -145,18 +176,24 @@ install_nerd_fonts() {
             mkdir -p "$FONT_DIR"
 
             echo "Downloading from $DOWNLOAD_URL..."
-            curl -L "$DOWNLOAD_URL" -o "$TEMP_ZIP"
+            if curl -fL "$DOWNLOAD_URL" -o "$TEMP_ZIP"; then
+                echo "Extracting fonts..."
+                unzip -o "$TEMP_ZIP" "*.ttf" -d "$FONT_DIR" 2>/dev/null || echo "Some files skipped during extraction"
 
-            unzip -o "$TEMP_ZIP" "*.ttf" -d "$FONT_DIR"
+                rm "$TEMP_ZIP"
 
-            rm "$TEMP_ZIP"
-
-            echo "Updating font cache..."
-            fc-cache -f -v
-            echo "Font installed."
+                echo "Updating font cache..."
+                fc-cache -f -v >/dev/null 2>&1
+                echo "Font installed successfully."
+            else
+                echo "Error: Failed to download Nerd Font. Skipping."
+                return 1
+            fi
         else
             echo "Caskaydia Cove Nerd Font already installed. Skipping."
         fi
+    elif [ "$OS" == "macOS" ]; then
+        echo "For macOS, install fonts via Homebrew: brew install --cask font-caskaydia-cove-nerd-font"
     fi
 }
 
@@ -181,9 +218,25 @@ elif [ "$OS" == "Linux" ]; then
     echo "Installing packages with apt..."
 
     # Assumes Ubuntu/Debian. Add logic for other package managers if needed.
+    echo "Updating package lists..."
     sudo apt update
+    
+    echo "Upgrading existing packages..."
     sudo apt upgrade -y
-    sudo apt install -y stow zsh neovim tmux i3 git gh neofetch curl wget build-essential feh rofi bluez blueman maim xclip xbacklight pavucontrol python3-pip python3.12-venv pipx dconf-editor cloudflare-warp scrot fzf ripgrep i3lock apt-transport-https ca-certificates software-properties-common picom btop gawk bat
+    
+    echo "Installing essential packages..."
+    sudo apt install -y stow zsh neovim tmux i3 git gh neofetch curl wget \
+        build-essential feh rofi bluez blueman maim xclip xbacklight \
+        pavucontrol python3-pip python3.12-venv pipx dconf-editor \
+        scrot fzf ripgrep i3lock apt-transport-https ca-certificates \
+        software-properties-common picom btop gawk bat unzip || {
+        echo "Warning: Some packages failed to install. Continuing..."
+    }
+    
+    # Try to install cloudflare-warp if available
+    if ! dpkg -l | grep -q cloudflare-warp; then
+        echo "Note: cloudflare-warp not in standard repos, skipping..."
+    fi
 
     # optional: install backup tools & samba for file sharing
     # sudo apt install samba timeshift deja-dup -y
@@ -236,24 +289,29 @@ elif [ "$OS" == "Linux" ]; then
 
     # --- MCPHub Setup for Neovim ---
     echo "Installing MCPHub globally via npm..."
-    npm install -g mcp-hub@latest
+    if command -v npm &>/dev/null; then
+        npm install -g mcp-hub@latest || echo "Warning: MCPHub installation failed. You may need to install Node.js first."
+    else
+        echo "Warning: npm not found. Skipping MCPHub installation. Install Node.js first."
+    fi
 
     # --- Oh My Zsh Setup ---
     if [ ! -d "$HOME/.oh-my-zsh" ]; then
         echo "Installing Oh My Zsh..."
-
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || {
+            echo "Warning: Oh My Zsh installation failed."
+        }
     else
         echo "Oh My Zsh is already installed. Skipping."
     fi
 
-    # --- PowerLevel10k Font Setup ---
+    # --- PowerLevel10k Theme Setup ---
     if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
         echo "Installing PowerLevel10k theme for Oh My Zsh..."
-
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
-
-        echo "PowerLevel10k installed."
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+            "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" && \
+            echo "PowerLevel10k installed." || \
+            echo "Warning: PowerLevel10k installation failed."
     else
         echo "PowerLevel10k is already installed. Skipping."
     fi

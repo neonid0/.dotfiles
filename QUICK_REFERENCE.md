@@ -103,6 +103,17 @@ make test-deps           # Check what's missing
 git submodule update --init --recursive
 ```
 
+### Git LFS issues
+```bash
+# Install Git LFS
+sudo apt install git-lfs    # Linux
+brew install git-lfs        # macOS
+
+# Initialize and pull LFS files
+git lfs install
+git lfs pull
+```
+
 ## Post-Install Checklist
 
 - [ ] Log out and back in (zsh default shell)

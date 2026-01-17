@@ -23,7 +23,8 @@ Modern, well-organized dotfiles for Linux (Ubuntu/Debian) and macOS. Managed wit
 ### Installation
 
 ```bash
-# Clone the repository (with submodules)
+# Clone the repository (with submodules and LFS)
+git lfs install
 git clone --recursive https://github.com/neonid0/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 
@@ -261,6 +262,39 @@ make install           # Reinstall
 ```bash
 git submodule update --init --recursive
 ```
+
+### Git LFS issues
+
+```bash
+# Install Git LFS if not already installed
+sudo apt install git-lfs      # Linux
+brew install git-lfs          # macOS
+
+# Initialize and pull LFS files
+git lfs install
+git lfs pull
+```
+
+---
+
+## 📦 Git LFS
+
+This repository uses Git LFS (Large File Storage) to manage binary files efficiently:
+
+- **Images**: `*.png`, `*.jpg`, `*.jpeg`, `*.gif`
+- **Fonts**: `*.ttf`, `*.otf`
+
+**First time setup:**
+```bash
+# Install Git LFS
+sudo apt install git-lfs    # Linux
+brew install git-lfs        # macOS
+
+# Initialize LFS
+git lfs install
+```
+
+LFS files are automatically pulled when you clone with `git lfs install` configured.
 
 ---
 

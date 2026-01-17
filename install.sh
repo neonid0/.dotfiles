@@ -212,7 +212,10 @@ if [ "$OS" == "macOS" ]; then
     if ! command -v brew &>/dev/null; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    brew install stow zsh neovim tmux git gh neofetch curl
+    brew install stow zsh neovim tmux git git-lfs gh neofetch curl
+    
+    # Initialize Git LFS
+    git lfs install
 
 elif [ "$OS" == "Linux" ]; then
     echo "Installing packages with apt..."
@@ -225,13 +228,17 @@ elif [ "$OS" == "Linux" ]; then
     sudo apt upgrade -y
     
     echo "Installing essential packages..."
-    sudo apt install -y stow zsh neovim tmux i3 git gh neofetch curl wget \
+    sudo apt install -y stow zsh neovim tmux i3 git git-lfs gh neofetch curl wget \
         build-essential feh rofi bluez blueman maim xclip xbacklight \
         pavucontrol python3-pip python3.12-venv pipx dconf-editor \
         scrot fzf ripgrep i3lock apt-transport-https ca-certificates \
         software-properties-common picom btop gawk bat unzip || {
         echo "Warning: Some packages failed to install. Continuing..."
     }
+    
+    # Initialize Git LFS
+    echo "Initializing Git LFS..."
+    git lfs install
     
     # Try to install cloudflare-warp if available
     if ! dpkg -l | grep -q cloudflare-warp; then

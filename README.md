@@ -1,92 +1,279 @@
 # neonid0's Dotfiles
 
-These are my personal configuration files (dotfiles) for Linux (Ubuntu/Debian) and macOS.
+Modern, well-organized dotfiles for Linux (Ubuntu/Debian) and macOS. Managed with **GNU Stow** and automated installation scripts.
 
-The setup is managed by **GNU Stow** and automated with a bootstrap script (`install.sh`) to make setting up a new machine fast and simple.
+[![Linux](https://img.shields.io/badge/Linux-Tested-success)]()
+[![macOS](https://img.shields.io/badge/macOS-Compatible-blue)]()
 
 ---
 
-## 🚀 Installation
+## ✨ Features
 
-**Warning:** This script will install packages, set `zsh` as your default shell, and overwrite existing configs for the software listed below. Please read the script before running.
+- 🚀 **One-command installation** with interactive package selection
+- 🔄 **Easy sync** between local configs and repository
+- 🧪 **Comprehensive testing** before installation
+- 📦 **Modular structure** with common and OS-specific configs
+- 🎨 **Beautiful terminal** with PowerLevel10k and Nerd Fonts
+- 🛠️ **Makefile** for convenient commands
 
-1.  **Clone the repository (recursively):**
+---
 
-Clone to ~/.dotfiles. The --recursive flag is now required to pull the nvim config
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
+# Clone the repository (with submodules)
 git clone --recursive https://github.com/neonid0/.dotfiles.git ~/.dotfiles
-```
-
-2.  **Run the bootstrap script:**
-
-```bash
 cd ~/.dotfiles
-./install.sh
+
+# Test before installing (recommended)
+make test-dry-run
+
+# Install everything
+make install
 ```
 
-The script is idempotent, so you can run it multiple times. It will ask for `sudo` permission to install system packages.
+### Using Makefile
 
-**Note on Updating**: To pull updates for both the dotfiles and the nvim config, run:
+The Makefile provides convenient shortcuts:
 
 ```bash
-git pull && git submodule update --remote
+make help          # Show all available commands
+make install       # Run full installation
+make sync          # Sync local configs to repo
+make update        # Pull latest changes
+make test          # Run all tests
 ```
 
 ---
 
 ## 📦 What's Included?
 
-This setup script configures and installs the following:
+### Core Tools
+- **Editor**: Neovim (LazyVim configuration)
+- **Shell**: Zsh + Oh My Zsh + PowerLevel10k
+- **Terminal Multiplexer**: Tmux
+- **Version Control**: Git + GitHub CLI
 
-| Category | Software |
-| :--- | :--- |
-| **Core Tools** | `nvim`, `tmux`, `zsh`, `git`, `gh` |
-| **Linux GUI** | `i3`, `rofi`, `picom`, `feh`, `i3lock-color`, `dconf` |
-| **Shell** | `Oh My Zsh` + `PowerLevel10k` theme, `bat`, `fzf`, `neofetch`, `btop`, `ripgrep` |
-| **Dev Runtimes** | `Rust (rustup)`, `Node.js (nvm)` |
-| **Dev Tools** | `build-essential`, `python3-pip`, `pipx` |
-| **Utilities** | `curl`, `wget`, `maim`, `xclip`, `xbacklight`, `pavucontrol`, `scrot` |
-| **Networking** | `bluez`, `blueman`, `cloudflare-warp` |
-| **Fonts & Themes** | `Caskaydia Cove Nerd Font`, `Carbonfox Theme (Gnome Terminal, neovim)` |
+### Linux GUI (i3 Window Manager)
+- **Window Manager**: i3-gaps
+- **Compositor**: Picom
+- **App Launcher**: Rofi (with vim keybindings)
+- **Lock Screen**: i3lock-color
+- **Wallpaper**: feh
+- **Tools**: maim, xclip, xbacklight, pavucontrol
 
----
+### Development
+- **Languages**: Rust (rustup), Node.js (nvm)
+- **Build Tools**: build-essential, python3-pip, pipx
+- **Utilities**: fzf, ripgrep, bat, btop, neofetch, fastfetch
 
-## 📂 File Structure
-
-This repository uses **GNU Stow** to manage symlinks. All configurations are organized into "packages" (folders) which are then symlinked to your home directory (`~/`).
-
-The structure is split by operating system:
-
-* **`common/`**: Contains configs shared between all systems (e.g., `nvim`, `zsh`, `tmux`).
-* **`linux/`**: Contains Linux-only configs (e.g., `i3`, `rofi`, `systemd-user`).
-* **`macos/`**: Contains macOS-only configs.
-
-The `install.sh` script automatically detects the OS and stows the correct packages.
+### Fonts & Themes
+- **Font**: Caskaydia Cove Nerd Font
+- **Terminal Theme**: Carbonfox (GNOME Terminal)
+- **Editor Theme**: Multiple options (Monokai Pro, Tokyo Night, etc.)
 
 ---
 
-## ✏️ Manual Post-Install Steps
+## 📂 Repository Structure
 
-The script automates almost everything, but a few final steps are required:
+```
+~/.dotfiles/
+├── common/           # Shared configs (Linux + macOS)
+│   ├── nvim/         # Neovim config
+│   ├── tmux/         # Tmux config
+│   ├── zsh/          # Zsh config
+│   ├── p10k/         # PowerLevel10k theme
+│   ├── kitty/        # Kitty terminal
+│   ├── fastfetch/    # Fastfetch config
+│   ├── neofetch/     # Neofetch config
+│   └── git/          # Git ignore patterns
+├── linux/            # Linux-specific configs
+│   ├── i3/           # i3 window manager
+│   ├── rofi/         # Rofi launcher
+│   ├── i3status/     # i3 status bar
+│   ├── feh/          # Wallpaper setter
+│   ├── gnome-shell/  # GNOME terminal theme
+│   ├── systemd-user/ # User systemd services
+│   └── xsession/     # X session config
+├── mac/              # macOS-specific configs
+│   ├── aerospace/    # Aerospace WM
+│   ├── alacritty/    # Alacritty terminal
+│   └── skhd/         # Hotkey daemon
+├── install.sh        # Main installation script
+├── sync.sh           # Sync local configs to repo
+├── Makefile          # Convenient make commands
+└── test_*.sh         # Testing scripts
+```
 
-1.  **Restart Your Shell (or Log Out):** You must log out and log back in for the `chsh -s /usr/bin/zsh` (shell change) to take effect.
+---
 
-2.  **Configure PowerLevel10k:** The first time you open `zsh`, the `PowerLevel10k` configuration wizard will automatically run. You'll need to go through it once to set up your prompt (e.g., `p10k configure`).
+## 🔧 Usage
 
-3.  **Activate Systemd Services (Optional):**
-    Your script includes a commented-out section for `systemd` user services (like your Bluetooth scripts). If you want to enable these, you must:
-    * Un-comment the final section in `install.sh`.
-    * Re-run the script: `./install.sh`.
+### Syncing Configs
 
-4.  **Gnome Terminal Theme:**
-    The script attempts to apply the `carbonfox.sh` theme. You may need to manually select "Carbonfox" in your Gnome Terminal's profile settings (`Preferences` -> `Profiles`).
+After modifying your local configs, sync them back to the repository:
 
-## Extra Notes
+```bash
+make sync              # Sync all configs
+cd ~/.dotfiles
+git add -A
+git commit -m "Update configs"
+git push
+```
 
-- You need to add your ```device MAC address``` to ```Auto Bluetooth scripts``` for it to work properly.
+### Updating Dotfiles
 
-- If you want to customize any configurations, simply edit the files in the respective package folders (e.g., `common/nvim/` for Neovim config). After making changes, you can re-stow the package by running:
-    ```bash
-    stow -R common/nvim
-    ```
+To pull the latest changes from the repository:
+
+```bash
+make update            # Pull + update submodules
+```
+
+### Stow Management
+
+Manually manage symlinks with stow:
+
+```bash
+make stow-common       # Stow common packages
+make stow-os           # Stow OS-specific packages
+make unstow            # Remove all symlinks
+```
+
+Or use stow directly:
+
+```bash
+cd ~/.dotfiles/common
+stow -R -t ~ nvim      # Restow nvim config
+stow -D -t ~ tmux      # Remove tmux symlinks
+```
+
+---
+
+## 🧪 Testing
+
+Before making changes, test the setup:
+
+```bash
+make test              # Run all tests
+make test-dry-run      # Simulate installation
+make test-deps         # Check dependencies
+make test-structure    # Validate repository structure
+```
+
+---
+
+## ✏️ Post-Install Steps
+
+1. **Restart your shell** or log out and back in for zsh to become default
+
+2. **Configure PowerLevel10k** on first zsh launch:
+   ```bash
+   p10k configure
+   ```
+
+3. **GNOME Terminal** users: Select "Carbonfox" profile in terminal preferences
+
+4. **Set up Git credentials**:
+   ```bash
+   git config --global user.name "Your Name"
+   git config --global user.email "your.email@example.com"
+   ```
+
+5. **For i3 users**: Edit `~/.config/i3/scripts/btautostop.sh` and add your Bluetooth device MAC address
+
+---
+
+## 🎨 Rofi Customization
+
+Rofi includes vim-style keybindings:
+
+- **Ctrl+j/k**: Navigate up/down
+- **Ctrl+l**: Accept/launch selected item
+- **Ctrl+f/b**: Page down/up
+- **Ctrl+g/Shift+g**: Jump to first/last item
+- **Ctrl+c/Esc**: Cancel
+
+Theme: `rounded-nord-dark` (from [rofi-themes-collection](https://github.com/newmanls/rofi-themes-collection))
+
+---
+
+## 🔄 Keeping Configs in Sync
+
+The `sync.sh` script automatically syncs these configs:
+
+**Common** (Linux + macOS):
+- nvim, tmux, zsh, p10k, kitty, fastfetch, neofetch
+
+**Linux-specific**:
+- rofi, i3, i3status
+
+**macOS-specific**:
+- aerospace, alacritty, skhd
+
+---
+
+## 🛠️ Customization
+
+### Adding New Configs
+
+1. Create a new folder in `common/` or `linux/`/`mac/`
+2. Add your config files with proper directory structure
+3. Update `sync.sh` to include the new config
+4. Run `make sync` to sync changes
+
+### Modifying Existing Configs
+
+1. Edit files in your home directory (e.g., `~/.config/nvim/`)
+2. Run `make sync` to sync back to dotfiles
+3. Commit and push changes
+
+---
+
+## 📝 Notes
+
+- The installation script is **idempotent** - safe to run multiple times
+- Requires **sudo** for system package installation
+- **Cloudflare WARP** is optional and may not be in standard repos
+- **i3lock-color** is compiled from source on Linux
+
+---
+
+## 🐛 Troubleshooting
+
+### Installation fails
+
+```bash
+make test-dry-run      # Check what would be installed
+make test-deps         # Verify dependencies
+```
+
+### Stow conflicts
+
+```bash
+make unstow            # Remove existing symlinks
+make install           # Reinstall
+```
+
+### Git submodule issues
+
+```bash
+git submodule update --init --recursive
+```
+
+---
+
+## 📄 License
+
+These dotfiles are provided as-is. Feel free to use, modify, and distribute.
+
+---
+
+## 🙏 Acknowledgments
+
+- [LazyVim](https://github.com/LazyVim/LazyVim) - Neovim configuration
+- [Oh My Zsh](https://ohmyz.sh/) - Zsh framework
+- [PowerLevel10k](https://github.com/romkatv/powerlevel10k) - Zsh theme
+- [rofi-themes-collection](https://github.com/newmanls/rofi-themes-collection) - Rofi themes
+- [i3lock-color](https://github.com/Raymo111/i3lock-color) - Lock screen

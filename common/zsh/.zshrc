@@ -161,7 +161,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="$HOME/.local/bin:$PATH"
 
-neofetch
+fastfetch
 alias v="nvim"
 alias pn="pnpm"
 alias dprune="docker system prune -a --volumes"
@@ -193,3 +193,5 @@ export PATH="$HOME/.aspire/bin:$PATH"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+eval "$(starship init zsh)"

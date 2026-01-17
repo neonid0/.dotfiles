@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEVICE="Your device name here from xinput list"
+DEVICE="UGTABLET 10 inch PenTablet Pen (0)"
 MONITOR1="DP-0"
 MONITOR2="DP-2"
 

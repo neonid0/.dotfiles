@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BT_DEVICE="XX:XX:XX:XX:XX:XX"
+BT_DEVICE="CC:F8:26:4A:F5:C2"
 STOPPED=false
 
 while true; do

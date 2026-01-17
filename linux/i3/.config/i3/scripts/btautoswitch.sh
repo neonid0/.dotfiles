@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BT_DEVICE="XX:XX:XX:XX:XX:XX" # Replace with your device MAC
-SINK_NAME="bluez_output.XX_XX_XX_XX_XX_XX.1"
+BT_DEVICE="CC:F8:26:4A:F5:C2" # Replace with your device MAC
+SINK_NAME="bluez_output.CC_F8_26_4A_F5_C2.1"
 # SINK_NAME="bluez_sink.XX_XX_XX_XX_XX_XX.a2dp_sink"
 
 # Loop forever

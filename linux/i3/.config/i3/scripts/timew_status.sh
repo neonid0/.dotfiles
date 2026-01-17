@@ -9,9 +9,7 @@ ACTIVE_LINE=$(timew | grep "Tracking")
 TODAY_TOTAL=$(timew summary :day 2>/dev/null | grep -v "^$" | tail -1 | awk '{print $NF}')
 [ -z "$TODAY_TOTAL" ] && TODAY_TOTAL="0:00:00"
 
-if [ -z "$ACTIVE_LINE" ]; then
-    echo "⏸️ Idle | Today: $TODAY_TOTAL"
-else
+if [ ! -z "$ACTIVE_LINE" ]; then
     # Extract the tag (e.g., "Feature-X") and the elapsed time
     # This logic handles multiple tags and standard timew output
     TAG=$(timew | grep "Tracking" | cut -d' ' -f2-)

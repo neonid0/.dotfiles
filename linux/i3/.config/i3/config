@@ -175,7 +175,7 @@ for_window [class="grub-customizer"] floating enable
 for_window [class="qBittorrent"] floating enable
 for_window [title="FZF Launcher"] floating enable mode position center
 for_window [title="FZF Launcher"] fullscreen enable
-for_window [title="Floating Terminal"] floating enable
+for_window [title="Floating Terminal"] floating enable, resize set 1200 700, move position center
 for_window [class="libreoffice"] floating enable
 for_window [class="Docker Desktop"] floating enable
 for_window [class="input-leap"] floating enable
@@ -351,7 +351,8 @@ bar {
 # System tray and utilities
 exec --no-startup-id nm-applet
 exec_always --no-startup-id picom -b
-exec_always --no-startup-id feh --bg-scale ~/Pictures/bg.jpg
+# exec_always --no-startup-id feh --bg-scale ~/Pictures/bg.jpg
+exec_always --no-startup-id ~/.config/i3/scripts/video-wallpaper.sh
 
 # Unity Editor rendering fix for i3
 # exec --no-startup-id i3-unity-fix

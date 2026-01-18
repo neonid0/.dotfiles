@@ -83,9 +83,6 @@ floating_modifier $mod
 # Enable focus follows mouse
 focus_follows_mouse yes
 
-# Mouse cursor follows focus to center of window
-exec_always --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
-
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec kitty
@@ -114,19 +111,19 @@ bindsym $mod+Shift+s exec --no-startup-id gnome-terminal --title="Floating Termi
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+h focus left; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+bindsym $mod+j focus down; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+bindsym $mod+k focus up; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+bindsym $mod+l focus right; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
 
 # Toggle focus between floating and tiling windows
 bindsym $mod+space focus mode_toggle
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+Left focus left; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+bindsym $mod+Down focus down; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+bindsym $mod+Up focus up; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+bindsym $mod+Right focus right; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
 
 # move focused window
 bindsym $mod+Shift+h move left

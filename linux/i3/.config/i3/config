@@ -80,6 +80,12 @@ for_window [class="^.*"] client.focused           #2d2d2d  #2d2d2d  #ffffff  #2d
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# Enable focus follows mouse
+focus_follows_mouse yes
+
+# Mouse cursor follows focus to center of window
+exec_always --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec kitty
@@ -423,7 +429,7 @@ bindsym Ctrl+Shift+s exec --no-startup-id maim --select | tee /home/neonid0/Down
 # bindsym $mod+m move workspace to output left
 
 # Lock
-bindsym $mod+Shift+g exec ~/.config/i3/scripts/lock.sh
+bindsym $mod+Shift+g exec ~/.config/i3/scripts/lock_better.sh
 
 
 # Suspend

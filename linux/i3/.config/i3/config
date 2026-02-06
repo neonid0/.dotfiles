@@ -25,24 +25,24 @@ bindsym $mod+t exec "setxkbmap -layout 'tr'"
 set $timer_script ~/.config/i3/scripts/timer_control.sh
 
 # Define the mode
-set $mode_timetracking "⏱️ Time Tracking: (s)tart generic, (d)aily, (c)oding, (m)eeting, (q)uit tracking"
+set $mode_timetracking "⏱️ Time Tracking: (s)ociety, (m)lbnova, (i)lanpusulam, (p)arayuz, (q)uit tracking"
 
 bindsym $mod+y mode $mode_timetracking
 
 mode $mode_timetracking {
     # Calls the script with specific arguments (Polymorphism via args)
-    
-    # Start Coding
-    bindsym c exec --no-startup-id $timer_script start Coding, mode "default"
 
-    # Start Meeting
-    bindsym m exec --no-startup-id $timer_script start Meeting, mode "default"
+    # Start society
+    bindsym s exec --no-startup-id $timer_script start society, mode "default"
 
-    # Start Daily Standup (Nested tags)
-    bindsym d exec --no-startup-id $timer_script start Meeting Standup, mode "default"
+    # Start mlbnova
+    bindsym m exec --no-startup-id $timer_script start mlbnova, mode "default"
 
-    # Start Generic (No tag provided, defaults to 'General')
-    bindsym s exec --no-startup-id $timer_script start, mode "default"
+    # Start ilanpusulam
+    bindsym i exec --no-startup-id $timer_script start ilanpusulam, mode "default"
+
+    # Start parayuz
+    bindsym p exec --no-startup-id $timer_script start parayuz, mode "default"
 
     # Stop Tracking
     bindsym q exec --no-startup-id $timer_script stop, mode "default"
@@ -111,10 +111,15 @@ bindsym $mod+Shift+s exec --no-startup-id gnome-terminal --title="Floating Termi
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+h focus left; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
-bindsym $mod+j focus down; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
-bindsym $mod+k focus up; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
-bindsym $mod+l focus right; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+# bindsym $mod+h focus left; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+# bindsym $mod+j focus down; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+# bindsym $mod+k focus up; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+# bindsym $mod+l focus right; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
+bindsym $mod+h focus left; 
+bindsym $mod+j focus down; 
+bindsym $mod+k focus up;
+bindsym $mod+l focus right;
+
 
 # Toggle focus between floating and tiling windows
 bindsym $mod+space focus mode_toggle

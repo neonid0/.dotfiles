@@ -34,39 +34,39 @@ fi
 
 # Apply workspace assignments
 case "$CONFIG_TYPE" in
-    single)
-        for ws in 1 2 3 4 5 6 7 8 9 10; do
-            i3-msg "workspace number $ws; move workspace to output DP-2" >/dev/null 2>&1
-        done
-        ;;
-    dual)
-        i3-msg "workspace number 1; move workspace to output DP-2" >/dev/null 2>&1
-        i3-msg "workspace number 2; move workspace to output DP-2" >/dev/null 2>&1
-        i3-msg "workspace number 3; move workspace to output DP-2" >/dev/null 2>&1
-        i3-msg "workspace number 4; move workspace to output DP-0" >/dev/null 2>&1
-        i3-msg "workspace number 5; move workspace to output DP-0" >/dev/null 2>&1
-        i3-msg "workspace number 6; move workspace to output DP-0" >/dev/null 2>&1
-        i3-msg "workspace number 7; move workspace to output DP-2" >/dev/null 2>&1
-        i3-msg "workspace number 8; move workspace to output DP-2" >/dev/null 2>&1
-        i3-msg "workspace number 9; move workspace to output DP-0" >/dev/null 2>&1
-        i3-msg "workspace number 10; move workspace to output DP-0" >/dev/null 2>&1
-        ;;
-    triple)
-        i3-msg "workspace number 1; move workspace to output DP-2" >/dev/null 2>&1
-        i3-msg "workspace number 2; move workspace to output DP-2" >/dev/null 2>&1
-        i3-msg "workspace number 3; move workspace to output DP-2" >/dev/null 2>&1
-        i3-msg "workspace number 4; move workspace to output DP-0" >/dev/null 2>&1
-        i3-msg "workspace number 5; move workspace to output DP-0" >/dev/null 2>&1
-        i3-msg "workspace number 6; move workspace to output DP-0" >/dev/null 2>&1
-        i3-msg "workspace number 7; move workspace to output HDMI-0" >/dev/null 2>&1
-        i3-msg "workspace number 8; move workspace to output HDMI-0" >/dev/null 2>&1
-        i3-msg "workspace number 9; move workspace to output HDMI-0" >/dev/null 2>&1
-        i3-msg "workspace number 10; move workspace to output DP-2" >/dev/null 2>&1
-        ;;
+single)
+    for ws in 1 2 3 4 5 6 7 8 9 10; do
+        i3-msg "workspace number $ws; move workspace to output DP-2" >/dev/null 2>&1
+    done
+    ;;
+dual)
+    i3-msg "workspace number 1; move workspace to output DP-2" >/dev/null 2>&1
+    i3-msg "workspace number 2; move workspace to output DP-2" >/dev/null 2>&1
+    i3-msg "workspace number 3; move workspace to output DP-2" >/dev/null 2>&1
+    i3-msg "workspace number 4; move workspace to output DP-0" >/dev/null 2>&1
+    i3-msg "workspace number 5; move workspace to output DP-0" >/dev/null 2>&1
+    i3-msg "workspace number 6; move workspace to output DP-0" >/dev/null 2>&1
+    i3-msg "workspace number 7; move workspace to output DP-2" >/dev/null 2>&1
+    i3-msg "workspace number 8; move workspace to output DP-2" >/dev/null 2>&1
+    i3-msg "workspace number 9; move workspace to output DP-0" >/dev/null 2>&1
+    i3-msg "workspace number 10; move workspace to output DP-0" >/dev/null 2>&1
+    ;;
+triple)
+    i3-msg "workspace number 1; move workspace to output DP-2" >/dev/null 2>&1
+    i3-msg "workspace number 2; move workspace to output DP-2" >/dev/null 2>&1
+    i3-msg "workspace number 3; move workspace to output DP-2" >/dev/null 2>&1
+    i3-msg "workspace number 4; move workspace to output DP-0" >/dev/null 2>&1
+    i3-msg "workspace number 5; move workspace to output DP-0" >/dev/null 2>&1
+    i3-msg "workspace number 6; move workspace to output DP-0" >/dev/null 2>&1
+    i3-msg "workspace number 7; move workspace to output HDMI-0" >/dev/null 2>&1
+    i3-msg "workspace number 8; move workspace to output HDMI-0" >/dev/null 2>&1
+    i3-msg "workspace number 9; move workspace to output HDMI-0" >/dev/null 2>&1
+    i3-msg "workspace number 10; move workspace to output DP-2" >/dev/null 2>&1
+    ;;
 esac
 
 # Launch applications on appropriate workspaces
-i3-msg "workspace $TERMINAL_WS; exec i3-sensible-terminal"
+i3-msg "workspace $TERMINAL_WS; exec kitty"
 sleep 1
 i3-msg "workspace $FLOORP_WS; exec floorp"
 sleep 1

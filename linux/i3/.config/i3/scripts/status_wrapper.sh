@@ -15,16 +15,27 @@ i3status -c ~/.config/i3status/config | while :; do
     # Get the Timewarrior status from our script
     TIMEW=$(~/.config/i3/scripts/timew_status.sh)
 
+    # Get the Spotify status
+    SPOTIFY=$(~/.config/i3/scripts/spotify_status.sh)
+
     # Use jq to properly construct JSON with escaped text
     # Remove leading comma if present, then use jq to inject our custom block
     LINE_CLEAN=$(echo "$line" | sed 's/^,//')
 
     if [ "$FIRST_LINE" -eq 1 ]; then
         # First data line - no leading comma
-        echo "$LINE_CLEAN" | jq -c --arg timew "$TIMEW" '. = [{full_text: $timew, color: "#fadb2f"}] + .'
+        if [ -n "$SPOTIFY" ]; then
+            echo "$LINE_CLEAN" | jq -c --arg timew "$TIMEW" --arg spotify "$SPOTIFY" '. = [{full_text: $timew, color: "#fadb2f"}, {full_text: $spotify, color: "#1db954"}] + .'
+        else
+            echo "$LINE_CLEAN" | jq -c --arg timew "$TIMEW" '. = [{full_text: $timew, color: "#fadb2f"}] + .'
+        fi
         FIRST_LINE=0
     else
         # Subsequent lines - add leading comma
-        echo "$LINE_CLEAN" | jq -c --arg timew "$TIMEW" '. = [{full_text: $timew, color: "#fadb2f"}] + .' | sed 's/^/,/'
+        if [ -n "$SPOTIFY" ]; then
+            echo "$LINE_CLEAN" | jq -c --arg timew "$TIMEW" --arg spotify "$SPOTIFY" '. = [{full_text: $timew, color: "#fadb2f"}, {full_text: $spotify, color: "#1db954"}] + .' | sed 's/^/,/'
+        else
+            echo "$LINE_CLEAN" | jq -c --arg timew "$TIMEW" '. = [{full_text: $timew, color: "#fadb2f"}] + .' | sed 's/^/,/'
+        fi
     fi
 done

@@ -173,6 +173,7 @@ alias v="nvim"
 alias pn="pnpm"
 alias dprune="docker system prune -a --volumes"
 alias aseprite="/home/neonid0/Downloads/Programs/aseprite/build/bin/aseprite"
+alias ff="fastfetch"
 
 # API Keys - load from a local file not tracked in git
 # Create ~/.secrets file with your API keys:

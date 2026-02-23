@@ -1,0 +1,26 @@
+
+[ env ]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 10
+padding.y = 24
+
+# decorations = "Buttonless"
+decorations = "Transparent"
+
+opacity=0.9
+
+[font]
+normal.family = "Hack Nerd Font Propo"
+
+#regular
+size = 16
+
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/carbonfox.toml"
+]
+
+#for video
+# size = 35.1

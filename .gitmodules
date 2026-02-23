@@ -1,3 +1,6 @@
 [submodule "common/nvim/.config/nvim"]
 	path = common/nvim/.config/nvim
 	url = https://github.com/neonid0/init.lua
+[submodule "mac/alacritty/.config/alacritty/themes"]
+	path = mac/alacritty/.config/alacritty/themes
+	url = https://github.com/alacritty/alacritty-theme

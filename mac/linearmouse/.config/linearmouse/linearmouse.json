@@ -1,0 +1,199 @@
+{
+  "schemes" : [
+    {
+      "pointer" : {
+        "disableAcceleration" : true,
+        "acceleration" : 2
+      },
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "vendorID" : "0x9da",
+          "productID" : "0x3654",
+          "productName" : "USB Device "
+        }
+      },
+      "buttons" : {
+        "universalBackForward" : true
+      },
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : false
+        },
+        "distance" : {
+          "vertical" : 2,
+          "horizontal" : 1
+        },
+        "speed" : 0,
+        "acceleration" : 1
+      }
+    },
+    {
+      "pointer" : {
+        "acceleration" : 2
+      },
+      "if" : {
+        "app" : "com.openai.chat",
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x3654",
+          "productName" : "USB Device ",
+          "vendorID" : "0x9da"
+        }
+      },
+      "scrolling" : {
+        "distance" : {
+          "vertical" : 10
+        }
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "productName" : "USB Device ",
+          "vendorID" : "0x9da",
+          "category" : "mouse",
+          "productID" : "0x3654"
+        },
+        "app" : "app.zen-browser.zen"
+      },
+      "scrolling" : {
+        "distance" : {
+          "vertical" : 4
+        }
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "productName" : "USB Device ",
+          "category" : "mouse",
+          "vendorID" : "0x9da",
+          "productID" : "0x3654"
+        },
+        "app" : "net.whatsapp.WhatsApp"
+      },
+      "scrolling" : {
+        "distance" : {
+          "vertical" : 8
+        }
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "vendorID" : "0x9da",
+          "productName" : "USB Device ",
+          "category" : "mouse",
+          "productID" : "0x3654"
+        },
+        "app" : "com.apple.mail"
+      },
+      "scrolling" : {
+        "distance" : {
+          "vertical" : 5
+        }
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "productID" : "0x3654",
+          "vendorID" : "0x9da",
+          "productName" : "USB Device ",
+          "category" : "mouse"
+        },
+        "app" : "com.apple.AppStore"
+      },
+      "scrolling" : {
+        "distance" : {
+          "vertical" : 6
+        }
+      }
+    },
+    {
+      "if" : {
+        "app" : "com.apple.TextEdit",
+        "device" : {
+          "vendorID" : "0x9da",
+          "productID" : "0x3654",
+          "category" : "mouse",
+          "productName" : "USB Device "
+        }
+      },
+      "scrolling" : {
+        "distance" : {
+          "vertical" : 2
+        }
+      }
+    },
+    {
+      "if" : {
+        "app" : "com.apple.Preview",
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x3654",
+          "vendorID" : "0x9da",
+          "productName" : "USB Device "
+        }
+      },
+      "scrolling" : {
+        "distance" : {
+          "vertical" : 8
+        }
+      }
+    },
+    {
+      "scrolling" : {
+        "distance" : {
+          "vertical" : 7
+        },
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "speed" : {
+          "vertical" : 0
+        }
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x1ea7",
+          "productID" : "0x66",
+          "category" : "mouse",
+          "productName" : "2.4G Mouse"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 1.5,
+        "disableAcceleration" : true,
+        "speed" : 1
+      }
+    },
+    {
+      "scrolling" : {
+        "speed" : {
+          "vertical" : 0
+        },
+        "distance" : {
+          "vertical" : 6
+        },
+        "acceleration" : {
+          "vertical" : 1
+        }
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x46d",
+          "productID" : "0xc52f",
+          "productName" : "USB Receiver",
+          "category" : "mouse"
+        }
+      },
+      "pointer" : {
+        "disableAcceleration" : true,
+        "acceleration" : 1.5
+      }
+    }
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+}

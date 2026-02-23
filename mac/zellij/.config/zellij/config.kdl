@@ -1,0 +1,103 @@
+// Use this to ensure zellij doesn't override the default shell
+// default_shell "zsh"
+
+// Replicate 'set -g mouse on' from tmux. This is the default in Zellij.
+mouse_mode true
+
+// Set the theme. This block replaces the 'monokai-pro.tmux' plugin.
+// This is a popular Monokai Pro theme port for Zellij.
+// Source: https://github.com/loctvl842/monokai-pro.zellij
+themes {
+    monokai-pro {
+        fg 252 252 250
+        bg 45 42 56
+        black 68 63 84
+        red 255 97 136
+        green 169 220 118
+        yellow 255 216 102
+        blue 120 186 255
+        magenta 253 151 223
+        cyan 153 228 214
+        white 252 252 250
+        orange 255 176 103
+    }
+}
+// Set the active theme
+theme "monokai-pro"
+
+// === KEYBINDINGS ===
+// This section replicates your tmux keybindings.
+
+keybinds {
+    // UNBIND the default Zellij prefix key (Ctrl-g)
+    unbind "Ctrl g"
+
+    // BIND your new prefix key to Ctrl-a, just like in your tmux config.
+    // In Zellij, this is called entering "locked" mode.
+    locked {
+        bind "Ctrl a" { SwitchToMode "Normal"; }
+    }
+
+    // These are the keybindings available AFTER you press your prefix (Ctrl-a).
+    normal {
+        // --- Core Bindings ---
+        // Remap 'quit' to 'q' for convenience
+        bind "q" { Quit; }
+
+        // --- Pane Management ---
+        // Move between panes with vi keys (h,j,k,l)
+        bind "h" { MoveFocus "Left"; }
+        bind "l" { MoveFocus "Right"; }
+        bind "j" { MoveFocus "Down"; }
+        bind "k" { MoveFocus "Up"; }
+
+        // --- Session Management ---
+        // Rename session (equivalent to tmux 'rename-session')
+        bind "R" { SwitchToMode "RenameSession"; }
+        
+        // --- Pane Actions ---
+        // Move a pane to the next/previous tab. This is the closest equivalent
+        // to tmux's 'join-pane'. Zellij doesn't have a direct "move to arbitrary tab" prompt.
+        bind "m" { MovePaneToNextTab; }
+
+        // --- Other Modes ---
+        bind "d" { SwitchToMode "Session"; }
+        bind "s" { SwitchToMode "SwapLayout"; }
+        bind "[" { SwitchToMode "Scroll"; }
+    }
+
+    // Zellij's scroll/copy mode already uses vi keys by default ('setw -g mode-keys vi')
+    // The default 'y' key in this mode yanks to the primary selection on Linux.
+    // The default 'Ctrl-c' yanks to the system clipboard. This replaces your xclip binding.
+    scroll {
+        bind "h" { ScrollLeft; }
+        bind "j" { ScrollDown; }
+        bind "k" { ScrollUp; }
+        bind "l" { ScrollRight; }
+        bind "y" { Yank; }
+        bind "Ctrl c" { YankToClipboard; }
+    }
+    
+    renamesession {
+        bind "Enter" { Confirm; }
+        bind "Esc" { SwitchToMode "Locked"; }
+    }
+}
+
+// === PLUGINS ===
+// This section replicates your tmux plugins.
+
+// 'tmux-plugins/tpm' and 'tmux-plugins/tmux-sensible' are not needed.
+// Zellij has its own plugin system and aims for sensible defaults.
+
+// For 'christoomey/vim-tmux-navigator'
+// This plugin allows seamless navigation between vim/nvim splits and zellij panes.
+// Run this command in your terminal ONCE to install it:
+// zellij plugin --install "https://github.com/zellij-project/zellij-vim-nav/releases/latest/download/zellij-vim-nav.wasm"
+plugins {
+    // then load the plugin here
+    // this will let you use Ctrl-h/j/k/l to move between vim and zellij panes without the prefix
+    zellij-vim-nav {
+        path "zellij-vim-nav.wasm";
+    }
+}

@@ -101,15 +101,18 @@ sync_submodule() {
 
     # Ensure submodule is checked out (creates .git file in working dir)
     git -C "$DOTFILES_DIR" submodule update --init "$submodule_path" 2>/dev/null
+    # Make sure we're on the default branch, not detached HEAD
+    git -C "$submodule_dir" checkout main 2>/dev/null || git -C "$submodule_dir" checkout master 2>/dev/null
 
     # Rsync local config into submodule, preserving .git metadata
     rsync -av --delete --exclude='.git' "$HOME/$source_path/" "$submodule_dir/"
 
-    # Commit any changes inside the submodule
+    # Commit and push any changes inside the submodule
     if ! git -C "$submodule_dir" diff --quiet || ! git -C "$submodule_dir" diff --cached --quiet; then
         git -C "$submodule_dir" add -A
         git -C "$submodule_dir" commit -m "sync: update $name config from local"
-        echo -e "${GREEN}✓${NC} Committed $name changes to submodule (push with: git -C $submodule_dir push)"
+        git -C "$submodule_dir" push
+        echo -e "${GREEN}✓${NC} Pushed $name changes to submodule remote"
     else
         echo -e "${GREEN}✓${NC} $name submodule already up to date"
     fi

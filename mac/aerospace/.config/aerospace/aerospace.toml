@@ -1,6 +1,7 @@
 after-login-command = []
 after-startup-command = [
-    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+    'exec-and-forget touch /tmp/aerospace_leap_enabled'
 ]
 start-at-login = true
 
@@ -33,10 +34,11 @@ exec-on-workspace-change = ['/bin/bash', '-c', 'sketchybar --trigger aerospace_w
     alt-enter = 'exec-and-forget open -n /Applications/Alacritty.app'
     alt-shift-q = 'close'
 
-    alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
-    alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
-    alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
-    alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+    alt-h = 'exec-and-forget ~/.config/aerospace/scripts/focus_or_leap.sh left h'
+    alt-j = 'exec-and-forget ~/.config/aerospace/scripts/focus_or_leap.sh down j'
+    alt-k = 'exec-and-forget ~/.config/aerospace/scripts/focus_or_leap.sh up k'
+    alt-l = 'exec-and-forget ~/.config/aerospace/scripts/focus_or_leap.sh right l'
+    alt-i = 'exec-and-forget ~/.config/aerospace/scripts/toggle_leap.sh'
 
     alt-shift-h = 'move left'
     alt-shift-j = 'move down'

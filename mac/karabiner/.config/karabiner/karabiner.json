@@ -24,6 +24,19 @@
                         ]
                     },
                     {
+                        "description": "Disable Cmd+H (Hide Application)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": { "mandatory": ["left_command"], "optional": ["any"] }
+                                },
+                                "to": [],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Map Shift + Option + G to Lock Screen",
                         "manipulators": [
                             {

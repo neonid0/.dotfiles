@@ -44,7 +44,11 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     MAC_CONFIGS=(
         "aerospace:.config/aerospace"
         "alacritty:.config/alacritty"
+        "karabiner:.config/karabiner"
+        "linearmouse:.config/linearmouse"
         "skhd:.config/skhd"
+        "yabai:.config/yabai"
+        "zellij:.config/zellij"
     )
 else
     echo "Unsupported OS: $OSTYPE"
@@ -81,11 +85,45 @@ sync_config() {
     echo -e "${GREEN}✓${NC} Synced $name"
 }
 
+# Function to sync a git submodule config (e.g. nvim)
+# Initializes the submodule, rsyncs files into it, and commits changes
+sync_submodule() {
+    local name=$1
+    local source_path=$2
+    local submodule_path=$3   # relative path inside DOTFILES_DIR
+
+    if [[ ! -e "$HOME/$source_path" ]]; then
+        echo -e "⚠️  Skipping $name submodule: source not found at ~/$source_path"
+        return
+    fi
+
+    local submodule_dir="$DOTFILES_DIR/$submodule_path"
+
+    # Ensure submodule is checked out (creates .git file in working dir)
+    git -C "$DOTFILES_DIR" submodule update --init "$submodule_path" 2>/dev/null
+
+    # Rsync local config into submodule, preserving .git metadata
+    rsync -av --delete --exclude='.git' "$HOME/$source_path/" "$submodule_dir/"
+
+    # Commit any changes inside the submodule
+    if ! git -C "$submodule_dir" diff --quiet || ! git -C "$submodule_dir" diff --cached --quiet; then
+        git -C "$submodule_dir" add -A
+        git -C "$submodule_dir" commit -m "sync: update $name config from local"
+        echo -e "${GREEN}✓${NC} Committed $name changes to submodule (push with: git -C $submodule_dir push)"
+    else
+        echo -e "${GREEN}✓${NC} $name submodule already up to date"
+    fi
+}
+
 # Sync common configs
 echo -e "${BLUE}Syncing common configs...${NC}"
 for config in "${COMMON_CONFIGS[@]}"; do
     IFS=':' read -r name path <<< "$config"
-    sync_config "$name" "$path" "$DOTFILES_DIR/common"
+    if [[ "$name" == "nvim" ]]; then
+        sync_submodule "$name" "$path" "common/nvim/.config/nvim"
+    else
+        sync_config "$name" "$path" "$DOTFILES_DIR/common"
+    fi
 done
 
 # Sync OS-specific configs
@@ -105,3 +143,4 @@ fi
 
 echo -e "\n${BLUE}=== Sync complete ===${NC}"
 echo -e "\nRun 'cd ~/.dotfiles && git status' to see changes"
+echo -e "To push nvim config: git -C ~/.dotfiles/common/nvim/.config/nvim push && cd ~/.dotfiles && git add common/nvim/.config/nvim && git commit -m 'chore: update nvim submodule' && git push"

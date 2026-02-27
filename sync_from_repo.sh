@@ -45,7 +45,11 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     MAC_CONFIGS=(
         "aerospace:.config/aerospace"
         "alacritty:.config/alacritty"
+        "karabiner:.config/karabiner"
+        "linearmouse:.config/linearmouse"
         "skhd:.config/skhd"
+        "yabai:.config/yabai"
+        "zellij:.config/zellij"
     )
 else
     echo "Unsupported OS: $OSTYPE"

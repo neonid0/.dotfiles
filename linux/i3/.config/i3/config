@@ -115,10 +115,10 @@ bindsym $mod+Shift+s exec --no-startup-id gnome-terminal --title="Floating Termi
 # bindsym $mod+j focus down; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
 # bindsym $mod+k focus up; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
 # bindsym $mod+l focus right; exec --no-startup-id ~/.config/i3/scripts/mouse_follows_focus.sh
-bindsym $mod+h focus left; 
-bindsym $mod+j focus down; 
-bindsym $mod+k focus up;
-bindsym $mod+l focus right;
+bindsym $mod+h exec --no-startup-id ~/.config/i3/scripts/focus_or_leap.sh left  h
+bindsym $mod+j exec --no-startup-id ~/.config/i3/scripts/focus_or_leap.sh down  j
+bindsym $mod+k exec --no-startup-id ~/.config/i3/scripts/focus_or_leap.sh up    k
+bindsym $mod+l exec --no-startup-id ~/.config/i3/scripts/focus_or_leap.sh right l
 
 
 # Toggle focus between floating and tiling windows
@@ -403,9 +403,9 @@ workspace 10 output DP-2
 
 # FKeys
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% && notify-send -t 1000 "Volume" "$(pactl get-sink-volume 0 | grep -Po '\d+(?=%)' | head -1)%"
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% && notify-send -t 1000 "Volume" "$(pactl get-sink-volume 0 | grep -Po '\d+(?=%)' | head -1)%"
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle && notify-send -t 1000 "Volume" "$(pactl get-sink-mute 0 | grep -q 'yes' && echo 'Muted' || echo 'Unmuted')"
 #
 # # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
@@ -439,3 +439,7 @@ bindsym $mod+Shift+g exec ~/.config/i3/scripts/lock_better.sh
 
 # Suspend
 bindsym $mod+Shift+x exec systemctl suspend
+
+# Input Leap edge-navigation: toggle with Super+i, enabled by default on login
+exec --no-startup-id touch /tmp/i3_leap_enabled
+bindsym $mod+i exec --no-startup-id ~/.config/i3/scripts/toggle_leap.sh

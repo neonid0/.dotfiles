@@ -26,7 +26,7 @@ make unstow              # Remove symlinks
 ```
 ~/.dotfiles/
 ├── common/              # Linux + macOS
-│   ├── nvim/           # ~/.config/nvim
+│   ├── nvim/           # ~/.config/nvim  ← git submodule (neonid0/init.lua)
 │   ├── tmux/           # ~/.tmux.conf, ~/.tmux/
 │   ├── zsh/            # ~/.zshrc
 │   ├── p10k/           # ~/.p10k.zsh
@@ -41,7 +41,12 @@ make unstow              # Remove symlinks
 │   └── ...
 └── mac/
     ├── aerospace/      # ~/.config/aerospace
-    └── ...
+    ├── alacritty/      # ~/.config/alacritty
+    ├── karabiner/      # ~/.config/karabiner
+    ├── linearmouse/    # ~/.config/linearmouse
+    ├── skhd/           # ~/.config/skhd
+    ├── yabai/          # ~/.config/yabai
+    └── zellij/         # ~/.config/zellij
 ```
 
 ## Rofi Keybindings
@@ -62,6 +67,7 @@ make unstow              # Remove symlinks
 ```bash
 # After modifying configs
 make sync                # Sync to dotfiles
+                         # (nvim: auto-commits & pushes submodule)
 cd ~/.dotfiles
 git add -A
 git commit -m "Update X config"
@@ -101,6 +107,8 @@ make test-deps           # Check what's missing
 ### Submodule issues
 ```bash
 git submodule update --init --recursive
+# nvim submodule is at: common/nvim/.config/nvim
+# remote: https://github.com/neonid0/init.lua
 ```
 
 ### Git LFS issues

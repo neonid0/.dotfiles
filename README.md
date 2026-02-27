@@ -82,7 +82,7 @@ make test          # Run all tests
 ```
 ~/.dotfiles/
 ├── common/           # Shared configs (Linux + macOS)
-│   ├── nvim/         # Neovim config
+│   ├── nvim/         # Neovim config (submodule → github.com/neonid0/init.lua)
 │   ├── tmux/         # Tmux config
 │   ├── zsh/          # Zsh config
 │   ├── p10k/         # PowerLevel10k theme
@@ -101,9 +101,14 @@ make test          # Run all tests
 ├── mac/              # macOS-specific configs
 │   ├── aerospace/    # Aerospace WM
 │   ├── alacritty/    # Alacritty terminal
-│   └── skhd/         # Hotkey daemon
+│   ├── karabiner/    # Karabiner-Elements key remapping
+│   ├── linearmouse/  # LinearMouse settings
+│   ├── skhd/         # Hotkey daemon
+│   ├── yabai/        # Yabai tiling WM
+│   └── zellij/       # Zellij terminal multiplexer
 ├── install.sh        # Main installation script
 ├── sync.sh           # Sync local configs to repo
+├── sync_from_repo.sh # Sync repo configs to local
 ├── Makefile          # Convenient make commands
 └── test_*.sh         # Testing scripts
 ```
@@ -117,12 +122,17 @@ make test          # Run all tests
 After modifying your local configs, sync them back to the repository:
 
 ```bash
-make sync              # Sync all configs
+make sync              # Sync all configs (auto-commits & pushes nvim submodule)
 cd ~/.dotfiles
 git add -A
 git commit -m "Update configs"
 git push
 ```
+
+> **Neovim** config is managed as a git submodule pointing to
+> [neonid0/init.lua](https://github.com/neonid0/init.lua).
+> `make sync` automatically commits and pushes changes there — you only need to
+> commit the parent `.dotfiles` repo afterward.
 
 ### Updating Dotfiles
 
@@ -205,13 +215,13 @@ Theme: `rounded-nord-dark` (from [rofi-themes-collection](https://github.com/new
 The `sync.sh` script automatically syncs these configs:
 
 **Common** (Linux + macOS):
-- nvim, tmux, zsh, p10k, kitty, fastfetch, neofetch
+- nvim *(git submodule → [neonid0/init.lua](https://github.com/neonid0/init.lua))*, tmux, zsh, p10k, kitty, fastfetch, neofetch
 
 **Linux-specific**:
 - rofi, i3, i3status
 
 **macOS-specific**:
-- aerospace, alacritty, skhd
+- aerospace, alacritty, karabiner, linearmouse, skhd, yabai, zellij
 
 ---
 
@@ -262,6 +272,9 @@ make install           # Reinstall
 ```bash
 git submodule update --init --recursive
 ```
+
+> **Neovim** is a submodule. If `make sync` can't push it (e.g. no push access),
+> check your git credentials or SSH key for `https://github.com/neonid0/init.lua`.
 
 ### Git LFS issues
 

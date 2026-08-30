@@ -1,0 +1,132 @@
+{
+  "name": "office",
+  "created": "2026-08-19 21:59:39",
+  "windows": [
+    {
+      "workspace": "1",
+      "class": "kitty",
+      "instance": "kitty",
+      "title": "tmux",
+      "floating": false,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1626,
+        "height": 1571
+      },
+      "cmd": "kitty"
+    },
+    {
+      "workspace": "1",
+      "class": "kitty",
+      "instance": "kitty",
+      "title": "tmux",
+      "floating": false,
+      "rect": {
+        "x": 1626,
+        "y": 0,
+        "width": 2214,
+        "height": 1571
+      },
+      "cmd": "kitty"
+    },
+    {
+      "workspace": "2",
+      "class": "kitty",
+      "instance": "kitty",
+      "title": "tmux",
+      "floating": false,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1094,
+        "height": 1571
+      },
+      "cmd": "kitty"
+    },
+    {
+      "workspace": "2",
+      "class": "floorp",
+      "instance": "Navigator",
+      "title": "THY U\u00c7A\u011eINDA \u0130N\u0130\u015e ESNASINDA YOLCU RAHATSIZLANDI | Acil Durum Prosed\u00fcrleri Nas\u0131l \u0130\u015fledi? |Kaptan Baha - YouTube \u2014 Ablaze Floorp",
+      "floating": false,
+      "rect": {
+        "x": 1094,
+        "y": 0,
+        "width": 2746,
+        "height": 1571
+      },
+      "cmd": "floorp"
+    },
+    {
+      "workspace": "3",
+      "class": "thunderbird_thunderbird",
+      "instance": "Mail",
+      "title": "gizlikedi1090@gmail.com - Mozilla Thunderbird",
+      "floating": false,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 2688,
+        "height": 1571
+      },
+      "cmd": "thunderbird"
+    },
+    {
+      "workspace": "3",
+      "class": "Spotify",
+      "instance": "spotify",
+      "title": "Spotify Premium",
+      "floating": false,
+      "rect": {
+        "x": 2688,
+        "y": 0,
+        "width": 1152,
+        "height": 1571
+      },
+      "cmd": "spotify"
+    },
+    {
+      "workspace": "4",
+      "class": "teams-for-linux",
+      "instance": "teams-for-linux",
+      "title": "Chat | Supplier Portal | Dev & Task Hand over | Microsoft Teams",
+      "floating": false,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 3840,
+        "height": 1571
+      },
+      "cmd": "teams-for-linux"
+    },
+    {
+      "workspace": "5",
+      "class": "Telegram-desktop",
+      "instance": "telegram-desktop",
+      "title": "Veri Terminali",
+      "floating": false,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1571
+      },
+      "cmd": "telegram-desktop"
+    },
+    {
+      "workspace": "5",
+      "class": "TradingView",
+      "instance": "tradingview",
+      "title": "New tab",
+      "floating": false,
+      "rect": {
+        "x": 1920,
+        "y": 0,
+        "width": 1920,
+        "height": 1571
+      },
+      "cmd": "tradingview"
+    }
+  ]
+}

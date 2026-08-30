@@ -85,6 +85,13 @@ config_single_dp2() {
            --output HDMI-0 --off
 }
 
+config_ultrawide_dp0_only() {
+    # Ultrawide monitor 3440x1440 on DP-0 only (34" UW-QHD)
+    xrandr --output DP-0 --primary --mode 3440x1440 --pos 0x0 --rotate normal \
+           --output DP-2 --off \
+           --output HDMI-0 --off
+}
+
 config_dual_dp2_left() {
     xrandr --output DP-2 --primary --mode 1920x1080 --pos 0x0 --rotate normal \
            --output DP-0 --mode 1920x1080 --pos 1920x0 --rotate normal \
@@ -113,6 +120,13 @@ config_dual_vertical_stack() {
     xrandr --output DP-2 --primary --mode 1920x1080 --pos 0x0 --rotate normal \
            --output DP-0 --mode 1920x1080 --pos 0x1080 --rotate normal \
            --output HDMI-0 --off
+}
+
+config_dual_dp2_hdmi_mirror() {
+    # DP-2 and HDMI-0 mirrored (same content on both)
+    xrandr --output DP-2 --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+           --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal --same-as DP-2 \
+           --output DP-0 --off
 }
 
 config_triple_presentation_mirror() {
@@ -230,20 +244,22 @@ OPTIONS=(
     "4. Dual: DP-2 (left) + DP-0 rotated left (right)"
     "5. Dual: DP-0 rotated left (left) + DP-2 (right)"
     "6. Dual: DP-2 (top) + DP-0 (bottom) - Vertical"
-    "7. Triple: DP-2 + DP-0 + HDMI-0 (mirror DP-0 - presentation)"
-    "8. Triple: DP-2 + DP-0 + HDMI-0"
-    "9. Triple: DP-2 + HDMI-0 + DP-0"
-    "10. Triple: DP-0 + DP-2 + HDMI-0"
-    "11. Triple: DP-0 + HDMI-0 + DP-2"
-    "12. Triple: HDMI-0 + DP-2 + DP-0"
-    "13. Triple: HDMI-0 + DP-0 + DP-2"
-    "14. Triple: HDMI-0 (top) + DP-2 + DP-0 (bottom)"
-    "15. Triple Rotated: DP-0↻ + DP-2 + HDMI-0"
-    "16. Triple Rotated: DP-2 + DP-0↻ + HDMI-0"
-    "17. Triple Rotated: DP-2 + HDMI-0 + DP-0↻"
-    "18. Triple Rotated: DP-0↻ + HDMI-0 + DP-2"
-    "19. Triple Rotated: HDMI-0 + DP-0↻ + DP-2"
-    "20. Triple Rotated: HDMI-0 + DP-2 + DP-0↻"
+    "7. Dual: DP-2 + HDMI-0 (mirrored)"
+    "8. Triple: DP-2 + DP-0 + HDMI-0 (mirror DP-0 - presentation)"
+    "9. Triple: DP-2 + DP-0 + HDMI-0"
+    "10. Triple: DP-2 + HDMI-0 + DP-0"
+    "11. Triple: DP-0 + DP-2 + HDMI-0"
+    "12. Triple: DP-0 + HDMI-0 + DP-2"
+    "13. Triple: HDMI-0 + DP-2 + DP-0"
+    "14. Triple: HDMI-0 + DP-0 + DP-2"
+    "15. Triple: HDMI-0 (top) + DP-2 + DP-0 (bottom)"
+    "16. Triple Rotated: DP-0↻ + DP-2 + HDMI-0"
+    "17. Triple Rotated: DP-2 + DP-0↻ + HDMI-0"
+    "18. Triple Rotated: DP-2 + HDMI-0 + DP-0↻"
+    "19. Triple Rotated: DP-0↻ + HDMI-0 + DP-2"
+    "20. Triple Rotated: HDMI-0 + DP-0↻ + DP-2"
+    "21. Triple Rotated: HDMI-0 + DP-2 + DP-0↻"
+    "22. Ultrawide: 34\" 3440x1440 (DP-0 only)"
 )
 
 UI_TOOL=$(get_ui_tool)
@@ -274,47 +290,53 @@ case "$SELECTION" in
     "6. Dual: DP-2 (top) + DP-0 (bottom) - Vertical")
         config_dual_vertical_stack
         ;;
-    "7. Triple: DP-2 + DP-0 + HDMI-0 (mirror DP-0 - presentation)")
+    "7. Dual: DP-2 + HDMI-0 (mirrored)")
+        config_dual_dp2_hdmi_mirror
+        ;;
+    "8. Triple: DP-2 + DP-0 + HDMI-0 (mirror DP-0 - presentation)")
         config_triple_presentation_mirror
         ;;
-    "8. Triple: DP-2 + DP-0 + HDMI-0")
+    "9. Triple: DP-2 + DP-0 + HDMI-0")
         config_triple_separate_hdmi_extend_right
         ;;
-    "9. Triple: DP-2 + HDMI-0 + DP-0")
+    "10. Triple: DP-2 + HDMI-0 + DP-0")
         config_triple_separate_hdmi_middle
         ;;
-    "10. Triple: DP-0 + DP-2 + HDMI-0")
+    "11. Triple: DP-0 + DP-2 + HDMI-0")
         config_triple_dp0_dp2_hdmi
         ;;
-    "11. Triple: DP-0 + HDMI-0 + DP-2")
+    "12. Triple: DP-0 + HDMI-0 + DP-2")
         config_triple_dp0_hdmi_dp2
         ;;
-    "12. Triple: HDMI-0 + DP-2 + DP-0")
+    "13. Triple: HDMI-0 + DP-2 + DP-0")
         config_triple_hdmi_dp2_dp0
         ;;
-    "13. Triple: HDMI-0 + DP-0 + DP-2")
+    "14. Triple: HDMI-0 + DP-0 + DP-2")
         config_triple_hdmi_dp0_dp2
         ;;
-    "14. Triple: HDMI-0 (top) + DP-2 + DP-0 (bottom)")
+    "15. Triple: HDMI-0 (top) + DP-2 + DP-0 (bottom)")
         config_triple_separate_hdmi_top
         ;;
-    "15. Triple Rotated: DP-0↻ + DP-2 + HDMI-0")
+    "16. Triple Rotated: DP-0↻ + DP-2 + HDMI-0")
         config_triple_dp0rot_dp2_hdmi
         ;;
-    "16. Triple Rotated: DP-2 + DP-0↻ + HDMI-0")
+    "17. Triple Rotated: DP-2 + DP-0↻ + HDMI-0")
         config_triple_dp2_dp0rot_hdmi
         ;;
-    "17. Triple Rotated: DP-2 + HDMI-0 + DP-0↻")
+    "18. Triple Rotated: DP-2 + HDMI-0 + DP-0↻")
         config_triple_dp2_hdmi_dp0rot
         ;;
-    "18. Triple Rotated: DP-0↻ + HDMI-0 + DP-2")
+    "19. Triple Rotated: DP-0↻ + HDMI-0 + DP-2")
         config_triple_dp0rot_hdmi_dp2
         ;;
-    "19. Triple Rotated: HDMI-0 + DP-0↻ + DP-2")
+    "20. Triple Rotated: HDMI-0 + DP-0↻ + DP-2")
         config_triple_hdmi_dp0rot_dp2
         ;;
-    "20. Triple Rotated: HDMI-0 + DP-2 + DP-0↻")
+    "21. Triple Rotated: HDMI-0 + DP-2 + DP-0↻")
         config_triple_hdmi_dp2_dp0rot
+        ;;
+    "22. Ultrawide: 34\" 3440x1440 (DP-0 only)")
+        config_ultrawide_dp0_only
         ;;
     *)
         echo "Invalid selection: $SELECTION"
@@ -323,6 +345,34 @@ case "$SELECTION" in
 esac
 
 echo "Display configuration applied: $SELECTION"
+
+# Ask whether to keep laptop running when lid is closed (while external monitor is connected)
+ask_yes_no() {
+    local ui_tool="$1"
+    local prompt="$2"
+    case "$ui_tool" in
+        rofi)
+            printf '%s
+' "Yes" "No" | rofi -dmenu -i -p "$prompt"
+            ;;
+        dmenu)
+            printf '%s
+' "Yes" "No" | dmenu -i -p "$prompt"
+            ;;
+        zenity)
+            # zenity returns 0 on yes, 1 on no
+            if zenity --question --text="$prompt" --no-wrap; then
+                echo "Yes"
+            else
+                echo "No"
+            fi
+            ;;
+        *)
+            # Fallback to No
+            echo "No"
+            ;;
+    esac
+}
 
 # Assign workspaces based on configuration type
 case "$SELECTION" in
@@ -334,7 +384,8 @@ case "$SELECTION" in
     "3. Dual: DP-0 (left) + DP-2 (right)" | \
     "4. Dual: DP-2 (left) + DP-0 rotated left (right)" | \
     "5. Dual: DP-0 rotated left (left) + DP-2 (right)" | \
-    "6. Dual: DP-2 (top) + DP-0 (bottom) - Vertical")
+    "6. Dual: DP-2 (top) + DP-0 (bottom) - Vertical" | \
+    "7. Dual: DP-2 + HDMI-0 (mirrored)")
         assign_workspaces_dual
         WORKSPACE_CONFIG="Dual monitor"
         ;;
@@ -350,7 +401,58 @@ sleep 0.5
 
 echo "Workspaces assigned successfully"
 
-# Show notification
+# After applying the chosen configuration, ask whether to keep laptop running when lid closes
+LID_ACTION=$(ask_yes_no "$UI_TOOL" "Keep laptop running when lid is closed and use external monitor only?")
+
+if [ "$LID_ACTION" = "Yes" ] || [ "$LID_ACTION" = "yes" ]; then
+    # Detect all connected external outputs (exclude DP-2 which is laptop internal)
+    mapfile -t EXTERNAL_OUTS < <(xrandr --query | awk '/ connected/ {print $1}' | grep -v '^DP-2$' || true)
+
+    if [ "${#EXTERNAL_OUTS[@]}" -gt 0 ]; then
+        # Enable each external output with its preferred/auto mode
+        for out in "${EXTERNAL_OUTS[@]}"; do
+            xrandr --output "$out" --auto 2>/dev/null || true
+        done
+        # Make the first external primary
+        xrandr --output "${EXTERNAL_OUTS[0]}" --primary 2>/dev/null || true
+        # Turn off laptop internal display DP-2
+        xrandr --output DP-2 --off 2>/dev/null || true
+    else
+        if command -v notify-send &>/dev/null; then
+            notify-send "Lid behavior" "No external monitors detected — cannot switch to external-only." -u normal
+        else
+            echo "No external monitors detected — cannot switch to external-only."
+        fi
+    fi
+
+    # Try to prevent suspend on lid close for the current session using systemd-inhibit
+    if command -v systemd-inhibit &>/dev/null; then
+        # Start an inhibitor in background and store PID for later cleanup
+        systemd-inhibit --what=handle-lid-switch --why="External monitor connected" sleep infinity &
+        INHIBIT_PID=$!
+        mkdir -p "$HOME/.config/i3"
+        echo "$INHIBIT_PID" > "$HOME/.config/i3/keep_lid_open.pid"
+        if command -v notify-send &>/dev/null; then
+            notify-send "Lid behavior" "Laptop will stay awake while lid is closed (inhibitor running)." -u low
+        else
+            echo "Laptop will stay awake while lid is closed (inhibitor running)."
+        fi
+    else
+        echo "systemd-inhibit not available; cannot programmatically prevent suspend."
+        if command -v notify-send &>/dev/null; then
+            notify-send "Lid behavior" "systemd-inhibit not available — update /etc/systemd/logind.conf to ignore lid switch when docked." -u normal
+        fi
+    fi
+else
+    # User chose default behavior (suspend on lid close)
+    if command -v notify-send &>/dev/null; then
+        notify-send "Lid behavior" "Default lid-close behavior preserved (suspend)." -u low
+    fi
+fi
+
+# Show notification summarizing the applied configuration and workspace layout
 if command -v notify-send &>/dev/null; then
     notify-send "Display Configuration" "$WORKSPACE_CONFIG setup applied\nWorkspaces reassigned" -u low
+else
+    echo "Display Configuration: $WORKSPACE_CONFIG setup applied — Workspaces reassigned"
 fi

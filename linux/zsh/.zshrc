@@ -1,3 +1,4 @@
+export PATH="/home/neonid0/.nvm/versions/node/v24.15.0/bin:$PATH"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -203,3 +204,37 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 eval "$(starship init zsh)"
+
+
+# cds completion start
+
+# compinit can be removed here if loaded elsewhere in the script
+autoload -Uz compinit && compinit
+
+CDS_PROFILE=$(cds completion --shell zsh --profile 2> /dev/null) || CDS_PROFILE=""
+if [ -r "$CDS_PROFILE" ]; then
+    . "$CDS_PROFILE"
+fi
+
+# cds completion end
+
+# OpenClaw Completion
+[ -f "/home/neonid0/.openclaw/completions/openclaw.zsh" ] && source "/home/neonid0/.openclaw/completions/openclaw.zsh"
+
+# opencode
+export PATH=/home/neonid0/.opencode/bin:$PATH
+
+# macmini config start
+
+# Redirect Claude Code traffic to the Mac Mini over Tailscale
+# export ANTHROPIC_BASE_URL="http://100.81.232.90:11434"
+
+# Claude Code will crash if authentication is empty, so we feed it dummy keys
+# export ANTHROPIC_API_KEY="ollama"
+# export ANTHROPIC_AUTH_TOKEN="ollama"
+
+# Force Claude Code to use Qwen3.5 9B whenever it asks for Sonnet or Haiku
+# export ANTHROPIC_DEFAULT_SONNET_MODEL="qwen3.5:9b"
+# export ANTHROPIC_DEFAULT_HAIKU_MODEL="qwen3.5:9b"
+
+# macmini config end

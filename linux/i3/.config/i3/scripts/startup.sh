@@ -66,11 +66,11 @@ triple)
 esac
 
 # Launch applications on appropriate workspaces
-i3-msg "workspace $TERMINAL_WS; exec kitty"
-sleep 1
-i3-msg "workspace $FLOORP_WS; exec floorp"
-sleep 1
-i3-msg "workspace $SPOTIFY_WS; exec spotify"
+# i3-msg "workspace $TERMINAL_WS; exec kitty"
+# sleep 1
+# i3-msg "workspace $FLOORP_WS; exec floorp"
+# sleep 1
+# i3-msg "workspace $SPOTIFY_WS; exec spotify"
 
 # Return to workspace 1
 i3-msg "workspace number 1"

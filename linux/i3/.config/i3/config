@@ -363,7 +363,7 @@ bar {
 exec --no-startup-id nm-applet
 exec_always --no-startup-id picom -b
 # exec_always --no-startup-id feh --bg-scale ~/Pictures/bg.jpg
-exec_always --no-startup-id ~/.config/i3/scripts/video-wallpaper.sh
+# exec_always --no-startup-id ~/.config/i3/scripts/video-wallpaper.sh
 
 # Unity Editor rendering fix for i3
 # exec --no-startup-id i3-unity-fix
@@ -426,6 +426,8 @@ bindsym $mod+F7 exec --no-startup-id ~/.config/i3/scripts/brightness-control.sh 
 # bindsym Ctrl+$mod+w exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 # bindsym Ctrl+Shift+s exec --no-startup-id maim --select | xclip -selection clipboard -t image/png | maim 'home/neonid0/Downloads/Share/$(date +%Y-%m-%d_%H:%M:%S).png'
 bindsym Ctrl+Shift+s exec --no-startup-id maim --select | tee /home/neonid0/Downloads/Share/$(date +%Y-%m-%d_%H:%M:%S).png | xclip -selection clipboard -t image/png
+bindsym $mod+Shift+P exec --no-startup-id ~/.config/i3/scripts/screenshot-questions.sh
+bindsym Ctrl+Shift+f exec --no-startup-id ~/.config/i3/scripts/screenshot-open-ended-clipboard.sh
 
 # Alsa audio controls.
 # bindsym $mod+Shift+comma exec ~/.config/i3/scripts/alsa restore
@@ -443,3 +445,7 @@ bindsym $mod+Shift+x exec systemctl suspend
 # Input Leap edge-navigation: toggle with Super+i, enabled by default on login
 exec --no-startup-id touch /tmp/i3_leap_enabled
 bindsym $mod+i exec --no-startup-id ~/.config/i3/scripts/toggle_leap.sh
+
+# Save/restore i3 workspace setups (windows, geometry, floating state)
+bindsym $mod+o exec --no-startup-id ~/.config/i3/scripts/setup-save.sh
+bindsym $mod+Shift+o exec --no-startup-id ~/.config/i3/scripts/setup-restore.sh

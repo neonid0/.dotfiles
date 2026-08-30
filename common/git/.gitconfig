@@ -50,6 +50,12 @@
 [includeIf "gitdir:~/"]
         path = ~/.gitconfig.private
 
+# Work context: must come AFTER the private include so it wins for these repos.
+# gh's active account is personal (neonid0) and `gh auth git-credential` only
+# serves the ACTIVE account, so abics repos use osxkeychain instead.
+[includeIf "gitdir:~/Documents/projects/abics/"]
+        path = ~/.gitconfig.abics
+
 # a matter of taste (uncomment if you dare)
 
 [core]

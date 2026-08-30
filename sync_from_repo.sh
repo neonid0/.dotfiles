@@ -20,13 +20,13 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     COMMON_CONFIGS=(
         "nvim:.config/nvim"
         "tmux:.tmux.conf"
-        "zsh:.zshrc"
         "p10k:.p10k.zsh"
         "kitty:.config/kitty"
         "fastfetch:.config/fastfetch"
         "neofetch:.config/neofetch"
     )
     LINUX_CONFIGS=(
+        "zsh:.zshrc"
         "rofi:.config/rofi"
         "i3:.config/i3"
         "i3status:.config/i3status"
@@ -36,13 +36,13 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     COMMON_CONFIGS=(
         "nvim:.config/nvim"
         "tmux:.tmux.conf"
-        "zsh:.zshrc"
         "p10k:.p10k.zsh"
         "kitty:.config/kitty"
         "fastfetch:.config/fastfetch"
         "neofetch:.config/neofetch"
     )
     MAC_CONFIGS=(
+        "zsh:.zshrc"
         "aerospace:.config/aerospace"
         "alacritty:.config/alacritty"
         "karabiner:.config/karabiner"

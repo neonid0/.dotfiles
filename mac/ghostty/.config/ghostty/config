@@ -1,0 +1,10 @@
+font-family = CaskaydiaCove NFM
+font-size = 16
+
+background-opacity = 0.7
+background-blur-radius = 20
+
+cursor-style = block
+cursor-style-blink = false
+
+keybind = alt+enter=new_window

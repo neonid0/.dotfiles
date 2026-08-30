@@ -1,9 +1,9 @@
 [credential "https://github.com"]
 	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper = !gh auth git-credential
 
 # clearly makes git better
 
@@ -39,7 +39,8 @@
         enabled = true
         autoupdate = true
 [core]
-	      excludesfile = ~/.gitignore_global
+        # No excludesfile: git then uses the XDG default ~/.config/git/ignore,
+        # which this package stows (see .config/git/ignore).
         editor = nvim
 [rebase]
         autoSquash = true
